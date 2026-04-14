@@ -1,0 +1,42 @@
+<p class="section-label">Request a Return</p>
+
+<div *ngIf="successMsg" class="state-msg success">{{ successMsg }}</div>
+<div *ngIf="errorMsg"   class="state-msg error">{{ errorMsg }}</div>
+
+<div class="form-card">
+  <div class="form-group">
+    <label class="form-label">Order ID</label>
+    <input class="form-input" type="number" [(ngModel)]="orderId" placeholder="e.g. 42" min="1" />
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">Quick Select Reason</label>
+    <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px;">
+      <button
+        *ngFor="let r of commonReasons"
+        class="btn btn-outline btn-sm"
+        [style.background]="reason === r ? '#dbeafe' : ''"
+        [style.border-color]="reason === r ? '#38bdf8' : ''"
+        (click)="selectReason(r)">
+        {{ r }}
+      </button>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">Return Reason</label>
+    <textarea
+      class="form-input"
+      [(ngModel)]="reason"
+      rows="3"
+      placeholder="Describe the reason for return..."></textarea>
+  </div>
+
+  <button
+    class="btn btn-primary"
+    style="width: 100%; padding: 12px;"
+    [disabled]="loading"
+    (click)="submit()">
+    {{ loading ? 'Submitting...' : '🔁 Submit Return Request' }}
+  </button>
+</div>

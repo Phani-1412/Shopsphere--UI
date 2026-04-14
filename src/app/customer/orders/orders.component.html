@@ -1,0 +1,44 @@
+
+
+
+<p class="section-label">Track Your Order</p>
+
+<div class="form-card">
+  <div class="form-group">
+    <label class="form-label">Enter Order ID</label>
+    <input class="form-input" type="number" [(ngModel)]="orderId" placeholder="e.g. 42" min="1" />
+  </div>
+  <button class="btn btn-primary" (click)="search()" [disabled]="loading || !orderId">
+    {{ loading ? 'Searching...' : '🔍 Search Order' }}
+  </button>
+</div>
+
+<div *ngIf="error" class="state-msg error">{{ error }}</div>
+
+<div *ngIf="order">
+  <p class="section-label">Order Details</p>
+
+  <div class="item-card">
+    <div class="item-row">
+      <div>
+        <div class="item-title">Order #{{ order.orderID }}</div>
+        <div class="item-sub">Customer: {{ order.customerName }}</div>
+      </div>
+      <span class="badge"
+        [class.badge-pending]="order.status === 'Placed' || order.status === 'Packed'"
+        [class.badge-info]="order.status === 'Shipped'"
+        [class.badge-approved]="order.status === 'Delivered'"
+        [class.badge-rejected]="order.status === 'Cancelled'">
+        {{ order.status }}
+      </span>
+    </div>
+    <div class="item-detail" style="margin-top:10px;">
+      <strong>Total Amount:</strong> ₹{{ order.totalAmount | number:'1.2-2' }}
+    </div>
+  </div>
+</div>
+
+<div *ngIf="searched && !loading && !order && !error" class="state-msg">
+  No order found with that ID.
+</div>
+

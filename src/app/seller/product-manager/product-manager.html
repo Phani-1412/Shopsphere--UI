@@ -1,0 +1,93 @@
+<div class="container mt-4">
+  <div class="card shadow-sm p-4">
+    <h4 class="mb-4 text-dark fw-semibold">Product Manager</h4>
+
+    <div class="row g-3">
+      <div class="col-md-6">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Product Name"
+          [(ngModel)]="product.Name"
+        />
+      </div>
+
+      <div class="col-md-6">
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Price"
+          [(ngModel)]="product.Price"
+        />
+      </div>
+
+      <div class="col-md-6">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="SKU"
+          [(ngModel)]="product.SKU"
+        />
+      </div>
+
+      <div class="col-md-6">
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Store ID"
+          [(ngModel)]="product.StoreId"
+        />
+      </div>
+
+      <div class="col-md-6">
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Category ID"
+          [(ngModel)]="product.CategoryId"
+        />
+      </div>
+
+      <div class="col-12">
+        <button class="btn btn-dark w-100" (click)="addProduct()">
+          ➕ Add Product
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product List -->
+  <div class="card shadow-sm mt-4">
+    <div class="card-header bg-dark text-white">
+      Product List
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>SKU</th>
+            <th>Store</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let p of products">
+            <td>{{ p.Name }}</td>
+            <td>₹ {{ p.Price }}</td>
+            <td>{{ p.SKU }}</td>
+            <td>{{ p.StoreId }}</td>
+          </tr>
+
+          <tr *ngIf="products.length === 0">
+            <td colspan="4" class="text-center text-muted">
+              No products available
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

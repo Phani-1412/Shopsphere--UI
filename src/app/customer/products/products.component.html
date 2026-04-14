@@ -1,0 +1,37 @@
+<div *ngIf="loading" class="state-msg">Loading products...</div>
+<div *ngIf="error" class="state-msg error">{{ error }}</div>
+<div *ngIf="addMsg" class="state-msg success">{{ addMsg }}</div>
+ 
+<div *ngIf="!loading && !error">
+  <p class="section-label">{{ products.length }} Products Available</p>
+ 
+  <div class="product-grid">
+    <div class="product-card" *ngFor="let p of products">
+      <div class="product-name">{{ p.name }}</div>
+      <div class="product-price">₹{{ p.price | number:'1.2-2' }}</div>
+      <div class="product-sku">SKU: {{ p.sku }}</div>
+ 
+      <div *ngIf="addingProductId === p.productID" style="margin-top: 10px;">
+        <div class="form-group">
+          <label class="form-label">Quantity</label>
+          <input class="form-input" type="number" [(ngModel)]="quantity" min="1" />
+        </div>
+        <div class="item-actions">
+          <button class="btn btn-primary btn-sm" (click)="confirmAdd(p.productID)">✓ Add</button>
+          <button class="btn btn-outline btn-sm" (click)="cancelAdd()">Cancel</button>
+        </div>
+      </div>
+ 
+      <button
+        *ngIf="addingProductId !== p.productID"
+        class="btn btn-primary btn-sm"
+        style="margin-top: 10px; width: 100%;"
+        (click)="openAddToCart(p.productID,p.name)">
+        🛒 Add to Cart
+      </button>
+    </div>
+  </div>
+ 
+  <div class="state-msg" *ngIf="products.length === 0">No products available.</div>
+</div>
+ 

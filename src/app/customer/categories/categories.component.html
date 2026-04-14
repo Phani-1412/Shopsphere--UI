@@ -1,0 +1,61 @@
+<div *ngIf="loadingCats" class="state-msg">Loading categories...</div>
+<div *ngIf="error" class="state-msg error">{{ error }}</div>
+<div *ngIf="addMsg" class="state-msg success">{{ addMsg }}</div>
+
+<!-- Category list view -->
+<div *ngIf="!loadingCats && !selectedCategory">
+  <p class="section-label">Select a Category</p>
+  <div class="item-card" *ngFor="let cat of categories" style="cursor:pointer;" (click)="selectCategory(cat)">
+    <div class="item-row">
+      <div>
+        <div class="item-title">{{ cat.name }}</div>
+        <div class="item-sub" *ngIf="!cat.parentCategoryID">Top-level category</div>
+        <div class="item-sub" *ngIf="cat.parentCategoryID">Sub-category</div>
+      </div>
+      <span class="badge badge-info">→</span>
+    </div>
+  </div>
+  <div class="state-msg" *ngIf="categories.length === 0">No categories found.</div>
+</div>
+
+<!-- Products inside selected category -->
+<div *ngIf="selectedCategory">
+  <button class="btn btn-outline btn-sm" (click)="clearSelection()" style="margin-bottom:14px;">
+    ← Back to Categories
+  </button>
+
+  <p class="section-label">{{ selectedCategory.name }}</p>
+
+  <div *ngIf="loadingProducts" class="state-msg">Loading products...</div>
+
+  <div class="product-grid" *ngIf="!loadingProducts">
+    <div class="product-card" *ngFor="let p of products">
+      <div class="product-name">{{ p.name }}</div>
+      <div class="product-price">₹{{ p.price | number:'1.2-2' }}</div>
+      <div class="product-sku">SKU: {{ p.sku }}</div>
+
+      <div *ngIf="addingProductId === p.productID" style="margin-top: 10px;">
+        <div class="form-group">
+          <label class="form-label">Quantity</label>
+          <input class="form-input" type="number" [(ngModel)]="quantity" min="1" />
+        </div>
+        <div class="item-actions">
+          <button class="btn btn-primary btn-sm" (click)="confirmAdd(p.productID)">✓ Add</button>
+          <button class="btn btn-outline btn-sm" (click)="cancelAdd()">Cancel</button>
+        </div>
+      </div>
+
+      <button
+        *ngIf="addingProductId !== p.productID"
+        class="btn btn-primary btn-sm"
+        style="margin-top: 10px; width: 100%;"
+        (click)="openAddToCart(p.productID)">
+        🛒 Add to Cart
+      </button>
+    </div>
+  </div>
+
+  <div class="state-msg" *ngIf="!loadingProducts && products.length === 0">
+    No products in this category.
+  </div>
+</div>

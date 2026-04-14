@@ -1,0 +1,35 @@
+<div *ngIf="loading" class="state-msg">Loading...</div>
+<div *ngIf="error" class="state-msg error">{{ error }}</div>
+<div *ngIf="actionMsg" class="state-msg success">{{ actionMsg }}</div>
+ 
+<div *ngIf="!loading && !error">
+  <div class="item-card" *ngFor="let dispute of disputes">
+    <div class="item-row">
+      <div>
+        <div class="item-title">Dispute #{{ dispute.disputeID }}</div>
+        <div class="item-sub">Order #{{ dispute.orderID }}</div>
+      </div>
+      <span class="badge"
+        [class.badge-pending]="dispute.status === 'Raised'"
+        [class.badge-approved]="dispute.status === 'Resolved'">
+        {{ dispute.status }}
+      </span>
+    </div>
+    <div class="item-detail">{{ dispute.reason }}</div>
+    <div class="rejection-note" *ngIf="dispute.resolutionNote">
+      Resolution: {{ dispute.resolutionNote }}
+    </div>
+    <div class="item-actions" *ngIf="dispute.status === 'Raised'">
+      <button class="btn btn-approve" (click)="openResolve(dispute.disputeID)">✓ Resolve</button>
+    </div>
+    <div class="reject-form" *ngIf="resolvingId === dispute.disputeID">
+      <textarea [(ngModel)]="resolutionNote" placeholder="Enter resolution note..." rows="3"></textarea>
+      <div class="reject-form-actions">
+        <button class="btn btn-approve" (click)="submitResolve()">Submit</button>
+        <button class="btn btn-outline"  (click)="cancelResolve()">Cancel</button>
+      </div>
+    </div>
+  </div>
+  <div class="state-msg" *ngIf="disputes.length === 0">No disputes found.</div>
+</div>
+ 

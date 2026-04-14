@@ -1,0 +1,74 @@
+<div class="layout-wrapper">
+ 
+  <!-- LEFT SIDEBAR -->
+  <aside class="left-sidebar">
+    <div class="brand">
+      <span class="brand-icon">🛍️</span>
+      <span class="brand-name">ShopSphere</span>
+      <span class="brand-sub">Customer Panel</span>
+    </div>
+    <nav class="nav-menu">
+      <div class="nav-group" *ngFor="let group of menuGroups">
+        <span class="nav-group-label">{{ group.label }}</span>
+        <button
+          *ngFor="let key of group.keys"
+          class="nav-item"
+          [class.active]="activePanel === key"
+          (click)="openPanel(key)">
+          <span class="nav-icon">{{ getCard(key).icon }}</span>
+          <span>{{ getCard(key).label }}</span>
+        </button>
+      </div>
+    </nav>
+    <button class="logout-btn" (click)="logout()">
+      <span>🚪</span> Logout
+    </button>
+  </aside>
+ 
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-title">Customer Dashboard</h1>
+      <p class="page-subtitle">Welcome! Browse products, manage orders and track deliveries.</p>
+    </header>
+    <div class="cards-grid">
+      <div
+        *ngFor="let card of cards"
+        class="action-card"
+        [class.active]="activePanel === card.key"
+        (click)="openPanel(card.key)">
+        <div class="card-icon">{{ card.icon }}</div>
+        <div class="card-label">{{ card.label }}</div>
+        <div class="card-desc">{{ card.description }}</div>
+        <div class="card-arrow">→</div>
+      </div>
+    </div>
+  </main>
+ 
+  <!-- RIGHT PANEL -->
+  <aside class="right-panel" [class.open]="activePanel !== null">
+    <div class="panel-header">
+      <h2 class="panel-title">
+        <span *ngIf="activePanel">
+          {{ getCard(activePanel).icon }}
+          {{ getCard(activePanel).label }}
+        </span>
+       
+      </h2>
+      <button class="close-btn" (click)="closePanel()">✕</button>
+    </div>
+    <div class="panel-body">
+      <app-cust-products     *ngIf="activePanel === 'products'"></app-cust-products>
+      <app-cust-categories   *ngIf="activePanel === 'categories'"></app-cust-categories>
+      <app-cust-cart         *ngIf="activePanel === 'cart'"></app-cust-cart>
+      <app-cust-orders       *ngIf="activePanel === 'orders'"></app-cust-orders>
+      <app-cust-payment      *ngIf="activePanel === 'payment'"></app-cust-payment>
+      <app-cust-returns      *ngIf="activePanel === 'returns'"></app-cust-returns>
+      <app-cust-notifications *ngIf="activePanel === 'notifications'"></app-cust-notifications>
+    </div>
+  </aside>
+ 
+</div>
+ 
+ 
+ 

@@ -1,0 +1,36 @@
+<div *ngIf="loading" class="state-msg">Loading...</div>
+<div *ngIf="error" class="state-msg error">{{ error }}</div>
+<div *ngIf="actionMsg" class="state-msg success">{{ actionMsg }}</div>
+ 
+<div *ngIf="!loading">
+  <div class="item-card" *ngFor="let seller of sellers">
+    <div class="item-row">
+      <div>
+        <div class="item-title">{{ seller.storeName }}</div>
+        <div class="item-sub">Seller ID: {{ seller.sellerId }}</div>
+      </div>
+      <span class="badge"
+        [class.badge-pending]="seller.complianceStatus === 'Pending'"
+        [class.badge-approved]="seller.complianceStatus === 'Approved'"
+        [class.badge-rejected]="seller.complianceStatus === 'Rejected'">
+        {{ seller.complianceStatus }}
+      </span>
+    </div>
+    <div class="rejection-note" *ngIf="seller.rejectionReason">
+      Reason: {{ seller.rejectionReason }}
+    </div>
+    <div class="item-actions" *ngIf="seller.complianceStatus === 'Pending'">
+      <button class="btn btn-approve" (click)="approve(seller.sellerId)">✓ Approve</button>
+      <button class="btn btn-reject"  (click)="openReject(seller.sellerId)">✕ Reject</button>
+    </div>
+    <div class="reject-form" *ngIf="rejectingSellerId === seller.sellerId">
+      <textarea [(ngModel)]="rejectReason" placeholder="Enter rejection reason..." rows="3"></textarea>
+      <div class="reject-form-actions">
+        <button class="btn btn-reject"  (click)="submitReject()">Submit</button>
+        <button class="btn btn-outline" (click)="cancelReject()">Cancel</button>
+      </div>
+    </div>
+  </div>
+  <div class="state-msg" *ngIf="sellers.length === 0">No sellers found.</div>
+</div>
+ 

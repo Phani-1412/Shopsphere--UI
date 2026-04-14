@@ -1,0 +1,36 @@
+<div *ngIf="actionMsg" class="state-msg success">{{ actionMsg }}</div>
+ 
+<button class="btn btn-approve" style="margin-bottom:16px;" (click)="openCreate()" *ngIf="mode === null">
+  + Add Policy
+</button>
+ 
+<div class="form-card" *ngIf="mode !== null">
+  <div class="form-group">
+    <label class="form-label">Title</label>
+    <input class="form-input" [(ngModel)]="formTitle" placeholder="Policy title" />
+  </div>
+  <div class="form-group">
+    <label class="form-label">Content</label>
+    <textarea class="form-input" [(ngModel)]="formContent" placeholder="Write policy content here..." rows="5"></textarea>
+  </div>
+  <div style="display:flex; gap:8px;">
+    <button class="btn btn-approve" (click)="submit()">{{ mode === 'create' ? 'Create' : 'Save Changes' }}</button>
+    <button class="btn btn-outline" (click)="cancelForm()">Cancel</button>
+  </div>
+</div>
+ 
+<div *ngIf="loading" class="state-msg">Loading...</div>
+<div *ngIf="error" class="state-msg error">{{ error }}</div>
+ 
+<div *ngIf="!loading && !error && mode === null">
+  <div class="item-card" *ngFor="let policy of policies">
+    <div class="item-title">{{ policy.title }}</div>
+    <div class="item-detail">{{ policy.content }}</div>
+    <div class="item-actions" style="margin-top:10px;">
+      <button class="btn btn-outline" (click)="openEdit(policy)">✏️ Edit</button>
+      <button class="btn btn-reject"  (click)="delete(policy.policyID)">🗑 Delete</button>
+    </div>
+  </div>
+  <div class="state-msg" *ngIf="policies.length === 0">No policies found.</div>
+</div>
+ 

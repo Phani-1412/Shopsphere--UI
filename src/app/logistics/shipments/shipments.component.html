@@ -1,0 +1,51 @@
+<div *ngIf="loading" class="state-msg">Loading...</div>
+<div *ngIf="error" class="state-msg error">{{ error }}</div>
+<div *ngIf="actionMsg" class="state-msg success">{{ actionMsg }}</div>
+ 
+<div *ngIf="!loading && !error">
+  <div class="item-card" *ngFor="let shipment of shipments">
+    <div class="item-row">
+      <div>
+        <div class="item-title">Shipment #{{ shipment.shipmentID }}</div>
+        <div class="item-sub">Order #{{ shipment.orderID }} · {{ shipment.carrier }}</div>
+      </div>
+      <span class="badge"
+        [class.badge-pending]="shipment.status === 'Dispatched' || shipment.status === 'InTransit'"
+        [class.badge-info]="shipment.status === 'OutForDelivery'"
+        [class.badge-approved]="shipment.status === 'Delivered'"
+        [class.badge-rejected]="shipment.status === 'Failed'">
+        {{ shipment.status }}
+      </span>
+    </div>
+ 
+    <div class="item-sub" style="margin-top:6px;">
+      Tracking: <strong>{{ shipment.trackingNumber }}</strong>
+    </div>
+    <div class="item-sub">
+      Dispatched: {{ shipment.dispatchDate | date:'mediumDate' }}
+    </div>
+    <div class="item-sub" *ngIf="shipment.deliveryDate">
+      Delivered: {{ shipment.deliveryDate | date:'mediumDate' }}
+    </div>
+ 
+    <div class="item-actions" *ngIf="shipment.status !== 'Delivered'">
+      <button class="btn btn-approve" (click)="openUpdate(shipment.shipmentID, shipment.status)">
+        ✏️ Update Status
+      </button>
+    </div>
+ 
+    <div class="reject-form" *ngIf="updatingId === shipment.shipmentID">
+      <label class="form-label">New Status</label>
+      <select class="form-input" [(ngModel)]="newStatus">
+        <option *ngFor="let s of validStatuses" [value]="s">{{ s }}</option>
+      </select>
+      <div class="reject-form-actions" style="margin-top:8px;">
+        <button class="btn btn-approve" (click)="submitUpdate()">Save</button>
+        <button class="btn btn-outline" (click)="cancelUpdate()">Cancel</button>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="state-msg" *ngIf="shipments.length === 0">No shipments found.</div>
+</div>
+ 

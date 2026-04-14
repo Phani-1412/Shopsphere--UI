@@ -1,0 +1,45 @@
+.auth-wrapper {
+  perspective: 1000px; /* Gives the 3D depth effect */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+ 
+.card-container {
+  width: 350px;
+  height: 450px;
+  position: relative;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+ 
+/* The actual Flip action */
+.flipped {
+  transform: rotateY(180deg);
+}
+ 
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden; /* Critical: Hides the back side */
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  background: white;
+}
+ 
+.card-back {
+  transform: rotateY(180deg); /* Starts rotated so it shows correctly after flip */
+  background: #f8f9fa;
+}
+ 
+.toggle-link {
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
+}
+ 

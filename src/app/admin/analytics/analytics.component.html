@@ -1,0 +1,28 @@
+<div *ngIf="loading" class="state-msg">Loading...</div>
+<div *ngIf="error" class="state-msg error">{{ error }}</div>
+ 
+<div *ngIf="stats && !loading">
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-icon">📦</div>
+      <div class="stat-value">{{ stats.totalOrders }}</div>
+      <div class="stat-label">Total Orders</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">💰</div>
+      <div class="stat-value">₹{{ stats.totalRevenue | number:'1.0-0' }}</div>
+      <div class="stat-label">Total Revenue</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🔁</div>
+      <div class="stat-value">₹{{ stats.totalRefundAmount | number:'1.0-0' }}</div>
+      <div class="stat-label">Total Refunds</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🛒</div>
+      <div class="stat-value">{{ stats.totalProducts }}</div>
+      <div class="stat-label">Total Products</div>
+    </div>
+  </div>
+</div>
+ 

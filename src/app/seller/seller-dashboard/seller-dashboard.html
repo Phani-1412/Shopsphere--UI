@@ -1,0 +1,57 @@
+<!-- TOP NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+  <div class="container-fluid">
+    <a class="navbar-brand">ShopSphere Seller</a>
+  </div>
+</nav>
+
+<!-- MAIN LAYOUT -->
+<div class="container-fluid">
+  <div class="row">
+
+    <!-- SIDEBAR -->
+    <nav class="col-md-2 bg-light min-vh-100 border-end d-flex flex-column">
+
+      <!-- MENU ITEMS -->
+      <ul class="nav flex-column pt-3 flex-grow-1">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="dashboard"> 📊 Dashboard</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="inventory"> 📦 Inventory</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="orders"> 🛍️ Orders</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="products"> 🧾 Products</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="stores"> 🏪 Stores</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="profile"> 👤 My Profile</a>
+        </li>
+      </ul>
+
+      <!-- ✅ LOGOUT AT BOTTOM -->
+      <div class="p-3 border-top">
+        <button class="btn btn-danger w-100" (click)="logout()">
+          🚪Logout
+        </button>
+      </div>
+
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="col-md-10 ms-sm-auto px-md-4 mt-3">
+      <router-outlet></router-outlet>
+    </main>
+
+  </div>
+</div>

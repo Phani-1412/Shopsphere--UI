@@ -1,0 +1,68 @@
+  <div class="container navbar-expand-lg" style="display: flex;">
+   
+    <a class="navbar-brand fw-bold" routerLink="landingpage" style="font-size: 22px;">{{ title() }}</a>
+    <div class="ms-auto" >
+      <button class="btn btn-primary" routerLink="login">
+        Login / Register
+      </button>
+    </div>
+  </div>
+  <hr>
+ 
+ <section class="home-hero py-5 bg-light border-bottom">
+  <div class="container">
+    <div class="row align-items-center min-vh-50">
+      <div class="col-lg-7 text-center text-lg-start">
+        <h1 class="display-4 fw-bold mb-3">Welcome to <span class="text-primary">ShopSphere</span></h1>
+        <p class="lead text-muted mb-4">
+          Discover curated products, seamless checkout, and smart shopping for every need.
+          Start exploring our store and find the perfect item today.
+        </p>
+        <div class="d-flex gap-3 justify-content-center justify-content-lg-start flex-wrap">
+          <a class="btn btn-primary btn-lg px-4" routerLink="product">
+            <i class="bi bi-cart4 me-2"></i>Browse Products
+          </a>
+          <a class="btn btn-outline-secondary btn-lg px-4" routerLink="contact">
+            Contact Us
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-5 text-center mt-5 mt-lg-0">
+       <img src="Assets/image.png" alt="ShopSphere Store" class="img-fluid rounded-4 shadow-lg hero-img">
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<section class="container py-5">
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="feature-card p-5 rounded-4 shadow-sm h-100 text-center border-0">
+        <div class="feature-icon-wrapper mb-4">
+          <i class="bi bi-truck text-primary fs-1"></i>
+        </div>
+        <h3 class="h5 fw-bold mb-3">Fast Delivery</h3>
+        <p class="text-muted mb-0">Get your favorite products delivered quickly and safely to your doorstep.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="feature-card p-5 rounded-4 shadow-sm h-100 text-center border-0">
+        <div class="feature-icon-wrapper mb-4">
+          <i class="bi bi-shield-lock text-success fs-1"></i>
+        </div>
+        <h3 class="h5 fw-bold mb-3">Secure Checkout</h3>
+        <p class="text-muted mb-0">Shop with confidence using our encrypted and easy payment flow.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="feature-card p-5 rounded-4 shadow-sm h-100 text-center border-0">
+        <div class="feature-icon-wrapper mb-4">
+          <i class="bi bi-headset text-info fs-1"></i>
+        </div>
+        <h3 class="h5 fw-bold mb-3">Customer Support</h3>
+        <p class="text-muted mb-0">Our 24/7 team is ready to assist you with any questions or concerns.</p>
+      </div>
+    </div>
+  </div>
+</section>
+ <router-outlet></router-outlet>

@@ -1,0 +1,30 @@
+<div *ngIf="loading" class="state-msg">Loading...</div>
+<div *ngIf="error" class="state-msg error">{{ error }}</div>
+<div *ngIf="actionMsg" class="state-msg success">{{ actionMsg }}</div>
+ 
+<div *ngIf="!loading && !error">
+  <div class="item-card" *ngFor="let ret of returns">
+    <div class="item-row">
+      <div>
+        <div class="item-title">Return #{{ ret.returnID }}</div>
+        <div class="item-sub">Order #{{ ret.orderID }}</div>
+      </div>
+      <span class="badge"
+        [class.badge-pending]="ret.status === 'Pending'"
+        [class.badge-approved]="ret.status === 'Approved'"
+        [class.badge-rejected]="ret.status === 'Rejected'">
+        {{ ret.status }}
+      </span>
+    </div>
+    <div class="item-detail">{{ ret.reason }}</div>
+    <div class="item-sub" style="margin-top:4px;">
+      Requested: {{ ret.requestedDate | date:'mediumDate' }}
+    </div>
+    <div class="item-actions" *ngIf="ret.status === 'Pending'">
+      <button class="btn btn-approve" (click)="approve(ret.returnID)">✓ Approve</button>
+      <button class="btn btn-reject"  (click)="reject(ret.returnID)">✕ Reject</button>
+    </div>
+  </div>
+  <div class="state-msg" *ngIf="returns.length === 0">No return requests found.</div>
+</div>
+ 

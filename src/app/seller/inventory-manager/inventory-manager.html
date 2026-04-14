@@ -1,0 +1,28 @@
+<div class="container mt-4">
+<h3>Inventory Manager</h3>
+<div class="card p-3">
+    
+<input type="number" min="0" [(ngModel)]="inventory.productId"
+          class="form-control mb-2"
+          placeholder="Product ID">
+<input type="number" min="0" [(ngModel)]="inventory.availableQuantity"
+          class="form-control mb-2"
+          placeholder="Available Quantity">
+<input type="number" min="0" [(ngModel)]="inventory.reorderThreshold"
+          class="form-control mb-2"
+          placeholder="Reorder Threshold">
+<button class="btn btn-primary w-100 mb-2"
+           (click)="CreateOrUpdate()">
+     Create Inventory
+</button>
+<button class="btn btn-success w-100"
+           (click)="getInventory()">
+     Get Inventory
+</button>
+</div>
+<div *ngIf="result" class="card p-3 mt-3">
+<p><b>Product ID:</b> {{result.productID}}</p>
+<p><b>Available Qty:</b> {{result.availableQuantity}}</p>
+<p><b>Reorder Threshold:</b> {{result.reorderThreshold}}</p>
+</div>
+</div>

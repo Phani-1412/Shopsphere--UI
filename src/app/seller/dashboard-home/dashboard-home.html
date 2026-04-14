@@ -1,0 +1,108 @@
+<div class="container-fluid pt-4">
+  <div class="row mb-4">
+    <div class="col">
+      <h2 class="h4 border-bottom pb-2">Seller Performance Overview</h2>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-md-4">
+      <div class="card shadow-sm border-start border-primary border-2">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0 bg-primary text-white p-3 rounded">
+              <i class="bi bi-wallet2 fs-3"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <p class="text-muted mb-0">Total Revenue</p>
+              
+              <h3>{{revenue }}</h3>
+              <!-- <h3 class="mb-0">${{ revenue | number:'1.2-2' }}</h3> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow-sm border-start border-warning border-2" [routerLink]="['/orders']" style="cursor: pointer;">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0 bg-warning text-white p-3 rounded">
+              <i class="bi bi-cart-check fs-3"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <p class="text-muted mb-0">Total Orders</p>
+              <h3 class="mb-0">{{ totalOrders }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow-sm border-start border-info border-2" [routerLink]="['/inventory']" style="cursor: pointer;">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0 bg-info text-white p-3 rounded">
+              <i class="bi bi-box-seam fs-3"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <p class="text-muted mb-0">Inventory</p>
+              <h3 class="mb-0">{{ myProfile.inventory?.length || 0 }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow-sm border-start border-success border-2" [routerLink]="['/products']" style="cursor: pointer;">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0 bg-success text-white p-3 rounded">
+              <i class="bi bi-box fs-3"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <p class="text-muted mb-0">Products</p>
+              <h3 class="mb-0">{{ myProfile.products?.length || 0 }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow-sm border-start border-danger border-2"[routerLink]="['/stores']" style="cursor: pointer;">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0 bg-danger text-white p-3 rounded">
+              <i class="bi bi-shop fs-3"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <p class="text-muted mb-0">Stores</p>
+              <h3 class="mb-0">{{ myProfile.stores?.length || 0 }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4" >
+      <div class="card shadow-sm border-start border-dark border-2" [routerLink]="['/profile']" style="cursor: pointer;">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0 bg-dark text-white p-3 rounded">
+              <i class="bi bi-person-circle fs-3"></i>
+            </div>
+            <div class="flex-grow-1 ms-3">
+              <p class="text-muted mb-0">My Profile</p>
+              <h3 class="mb-0">{{ myProfile.name }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

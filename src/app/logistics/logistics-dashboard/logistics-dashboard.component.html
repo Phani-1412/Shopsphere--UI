@@ -1,0 +1,59 @@
+<div class="layout-wrapper">
+ 
+  <aside class="left-sidebar">
+    <div class="brand">
+      <span class="brand-icon">🚛</span>
+      <span class="brand-name">ShopSphere</span>
+      <span class="brand-sub">Logistics Panel</span>
+    </div>
+    <nav class="nav-menu">
+      <div class="nav-group">
+        <span class="nav-group-label">Operations</span>
+        <button
+          *ngFor="let card of cards"
+          class="nav-item"
+          [class.active]="activePanel === card.key"
+          (click)="openPanel(card.key)">
+          <span class="nav-icon">{{ card.icon }}</span>
+          <span>{{ card.label }}</span>
+        </button>
+      </div>
+    </nav>
+    <button class="logout-btn" (click)="logout()">
+      <span>🚪</span> Logout
+    </button>
+  </aside>
+ 
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-title">Logistics Dashboard</h1>
+      <p class="page-subtitle">Manage shipments and delivery status</p>
+    </header>
+    <div class="cards-grid">
+      <div
+        *ngFor="let card of cards"
+        class="action-card"
+        [class.active]="activePanel === card.key"
+        (click)="openPanel(card.key)">
+        <div class="card-icon">{{ card.icon }}</div>
+        <div class="card-label">{{ card.label }}</div>
+        <div class="card-desc">{{ card.description }}</div>
+        <div class="card-arrow">→</div>
+      </div>
+    </div>
+  </main>
+ 
+  <aside class="right-panel" [class.open]="activePanel !== null">
+    <div class="panel-header">
+      <h2 class="panel-title">
+        <span *ngIf="activePanel">🚚 Shipments</span>
+      </h2>
+      <button class="close-btn" (click)="closePanel()">✕</button>
+    </div>
+    <div class="panel-body">
+      <app-shipments *ngIf="activePanel === 'shipments'"></app-shipments>
+    </div>
+  </aside>
+ 
+</div>
+<router-outlet></router-outlet>

@@ -1,0 +1,37 @@
+<div *ngIf="loading" class="state-msg">Loading cart...</div>
+<div *ngIf="error" class="state-msg error">{{ error }}</div>
+<div *ngIf="actionMsg" class="state-msg success">{{ actionMsg }}</div>
+
+<div *ngIf="cartEmpty && !loading" class="state-msg">
+  🛒 Your cart is empty. Browse products to add items!
+</div>
+
+<div *ngIf="!loading && !error && cart">
+  <p class="section-label">Cart — Order #{{ cart.orderId }}</p>
+
+  <div class="cart-item" *ngFor="let item of cart.items">
+    <div>
+      <div class="item-title">{{ item.productName }}</div>
+      <div class="item-sub">Qty: {{ item.quantity }} × ₹{{ item.price | number:'1.2-2' }}</div>
+    </div>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <span style="font-weight:600; color:#0f4c81;">
+        ₹{{ (item.price * item.quantity) | number:'1.2-2' }}
+      </span>
+      <button class="btn btn-danger btn-sm" (click)="removeItem(item.productId)">🗑</button>
+    </div>
+  </div>
+
+  <div class="cart-total">
+    <span>Total</span>
+    <span>₹{{ cartTotal | number:'1.2-2' }}</span>
+  </div>
+
+  <button
+    class="btn btn-primary"
+    style="width:100%; margin-top:16px; padding:12px;"
+    [disabled]="checkingOut"
+    (click)="checkout()">
+    {{ checkingOut ? 'Processing...' : '✅ Checkout' }}
+  </button>
+</div>

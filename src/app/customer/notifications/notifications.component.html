@@ -1,0 +1,39 @@
+<div *ngIf="loading" class="state-msg">Loading notifications...</div>
+<div *ngIf="error"  class="state-msg error">{{ error }}</div>
+<div *ngIf="actionMsg" class="state-msg success">{{ actionMsg }}</div>
+
+<div *ngIf="!loading && !error">
+  <p class="section-label">
+    {{ notifications.length }} Notifications
+    <span *ngIf="unreadCount > 0" class="badge badge-pending" style="margin-left:8px;">
+      {{ unreadCount }} Unread
+    </span>
+  </p>
+
+  <div
+    *ngFor="let n of notifications"
+    class="notif-card"
+    [class.unread]="n.status !== 'Read'"
+    [class.read]="n.status === 'Read'"
+    (click)="markRead(n)">
+
+    <div class="item-row">
+      <div class="notif-msg">
+        <span *ngIf="n.status !== 'Read'" style="color:#0f4c81; font-weight:700;">● </span>
+        {{ n.message }}
+      </div>
+      <span class="badge badge-info" style="white-space:nowrap;">{{ n.category }}</span>
+    </div>
+
+    <div class="notif-meta">
+      {{ n.createdDate | date:'medium' }}
+      <span *ngIf="n.status !== 'Read'" style="margin-left:10px; color:#38bdf8;">Click to mark as read</span>
+      <span *ngIf="n.status === 'Read'" style="margin-left:10px;">✓ Read</span>
+    </div>
+  </div>
+
+  <div class="state-msg" *ngIf="notifications.length === 0">
+    🔔 No notifications yet.
+  </div>
+</div>
+

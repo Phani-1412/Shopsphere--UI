@@ -1,0 +1,53 @@
+/* Shared styles for all customer panel sub-components */
+/* Copy this into each sub-component's .css file */
+
+.state-msg { padding: 12px 0; font-size: 14px; color: #6b7280; text-align: center; }
+.state-msg.error   { color: #ef4444; }
+.state-msg.success { color: #22c55e; font-weight: 500; }
+
+.item-card { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 10px; padding: 16px; margin-bottom: 12px; }
+.item-row  { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.item-title { font-size: 14px; font-weight: 600; color: #111827; }
+.item-sub   { font-size: 12px; color: #6b7280; margin-top: 2px; }
+.item-detail { font-size: 13px; color: #374151; margin-top: 8px; line-height: 1.5; }
+
+.badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.badge-pending  { background: #fef3c7; color: #92400e; }
+.badge-approved { background: #d1fae5; color: #065f46; }
+.badge-rejected { background: #fee2e2; color: #991b1b; }
+.badge-info     { background: #dbeafe; color: #1e40af; }
+
+.item-actions { display: flex; gap: 8px; margin-top: 12px; }
+.btn { padding: 7px 16px; border-radius: 7px; border: none; font-size: 13px; font-weight: 500; cursor: pointer; transition: opacity 0.15s; }
+.btn:hover { opacity: 0.85; }
+.btn-primary  { background: #0f4c81; color: #fff; }
+.btn-approve  { background: #22c55e; color: #fff; }
+.btn-reject   { background: #ef4444; color: #fff; }
+.btn-outline  { background: transparent; border: 1px solid #d1d5db; color: #374151; }
+.btn-danger   { background: #fee2e2; color: #dc2626; }
+.btn-sm       { padding: 4px 10px; font-size: 12px; }
+
+.form-card  { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+.form-group { margin-bottom: 12px; }
+.form-label { display: block; font-size: 12px; font-weight: 600; color: #374151; margin-bottom: 4px; }
+.form-input { width: 100%; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 7px; font-size: 13px; color: #111827; box-sizing: border-box; }
+.form-input:focus { outline: none; border-color: #38bdf8; box-shadow: 0 0 0 3px rgba(56,189,248,0.15); }
+select.form-input { background: #fff; }
+
+.section-label { font-size: 11px; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: 1px; margin: 20px 0 10px; }
+
+.product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.product-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 14px; cursor: pointer; transition: all 0.15s; }
+.product-card:hover { border-color: #38bdf8; box-shadow: 0 4px 12px rgba(0,0,0,0.07); }
+.product-name  { font-size: 13px; font-weight: 600; color: #111827; margin-bottom: 4px; }
+.product-price { font-size: 14px; font-weight: 700; color: #0f4c81; }
+.product-sku   { font-size: 11px; color: #9ca3af; margin-top: 4px; }
+
+.cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f3f4f6; }
+.cart-total { display: flex; justify-content: space-between; padding: 14px 0 0; font-size: 15px; font-weight: 700; color: #111827; border-top: 2px solid #e5e7eb; margin-top: 8px; }
+
+.notif-card { padding: 12px 14px; border-radius: 8px; border: 1px solid #e5e7eb; margin-bottom: 8px; cursor: pointer; transition: background 0.15s; }
+.notif-card.unread { background: #f0f9ff; border-color: #bae6fd; }
+.notif-card.read   { background: #f9fafb; }
+.notif-msg   { font-size: 13px; color: #111827; }
+.notif-meta  { font-size: 11px; color: #9ca3af; margin-top: 4px; }

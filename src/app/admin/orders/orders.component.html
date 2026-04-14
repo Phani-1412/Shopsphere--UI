@@ -1,0 +1,25 @@
+<div *ngIf="loading" class="state-msg">Loading...</div>
+<div *ngIf="error" class="state-msg error">{{ error }}</div>
+ 
+<div *ngIf="!loading && !error">
+  <div class="item-card" *ngFor="let order of orders">
+    <div class="item-row">
+      <div>
+        <div class="item-title">Order #{{ order.orderID }}</div>
+        <div class="item-sub">{{ order.customerName }}</div>
+      </div>
+      <span class="badge"
+        [class.badge-pending]="order.status === 'Placed' || order.status === 'Packed'"
+        [class.badge-info]="order.status === 'Shipped' || order.status === 'Paid'"
+        [class.badge-approved]="order.status === 'Delivered'"
+        [class.badge-rejected]="order.status === 'Cancelled'">
+        {{ order.status }}
+      </span>
+    </div>
+    <div class="item-sub" style="margin-top:6px;">
+      Total: <strong>₹{{ order.totalAmount | number:'1.2-2' }}</strong>
+    </div>
+  </div>
+  <div class="state-msg" *ngIf="orders.length === 0">No orders found.</div>
+</div>
+ 

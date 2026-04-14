@@ -1,0 +1,42 @@
+<div *ngIf="actionMsg" class="state-msg success">{{ actionMsg }}</div>
+ 
+<button class="btn btn-approve" style="margin-bottom:16px;" (click)="toggleForm()">
+  {{ showForm ? '✕ Cancel' : '+ Add Category' }}
+</button>
+ 
+<div class="form-card" *ngIf="showForm">
+  <div class="form-group">
+    <label class="form-label">Category Name</label>
+    <input class="form-input" [(ngModel)]="newName" placeholder="e.g. Electronics" />
+  </div>
+  <div class="form-group">
+    <label class="form-label">Parent Category (optional)</label>
+    <select class="form-input" [(ngModel)]="newParentId">
+      <option [ngValue]="null">— None (top-level) —</option>
+      <option *ngFor="let cat of categories" [ngValue]="cat.categoryID">{{ cat.name }}</option>
+    </select>
+  </div>
+  <button class="btn btn-approve" (click)="submit()">Create</button>
+</div>
+ 
+<div *ngIf="loading" class="state-msg">Loading...</div>
+<div *ngIf="error" class="state-msg error">{{ error }}</div>
+ 
+<div *ngIf="!loading && !error">
+  <div class="item-card" *ngFor="let cat of categories">
+    <div class="item-row">
+      <div>
+        <div class="item-title">{{ cat.name }}</div>
+        <div class="item-sub" *ngIf="cat.parentCategoryID">Sub-category of ID: {{ cat.parentCategoryID }}</div>
+        <div class="item-sub" *ngIf="!cat.parentCategoryID">Top-level category</div>
+      </div>
+      <span class="badge badge-info">ID: {{ cat.categoryID }}</span>
+    </div>
+    <div *ngIf="cat.subCategories && cat.subCategories.length > 0" style="margin-top:8px;">
+      <div class="item-sub">Sub-categories:</div>
+      <span class="sub-tag" *ngFor="let sub of cat.subCategories">{{ sub.name }}</span>
+    </div>
+  </div>
+  <div class="state-msg" *ngIf="categories.length === 0">No categories found.</div>
+</div>
+ <router-outlet></router-outlet>
