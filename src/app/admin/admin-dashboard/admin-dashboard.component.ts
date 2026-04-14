@@ -11,7 +11,6 @@ export class AdminDashboardComponent {
   activePanel: string | null = null;
  
   cards = [
-    { icon: '📊', key: 'analytics',   label: 'Analytics',   description: 'Platform stats & revenue',       category: 'Overview' },
     { icon: '👤', key: 'sellers',     label: 'Sellers',     description: 'Approve, reject & view sellers', category: 'Management' },
     { icon: '📦', key: 'orders',      label: 'Orders',      description: 'View all marketplace orders',    category: 'Management' },
     { icon: '⚖️', key: 'disputes',   label: 'Disputes',    description: 'Resolve customer disputes',      category: 'Operations' },
@@ -22,7 +21,6 @@ export class AdminDashboardComponent {
   ];
  
   menuGroups = [
-    { label: 'Overview',      keys: ['analytics'] },
     { label: 'Management',    keys: ['sellers', 'orders'] },
     { label: 'Operations',    keys: ['disputes', 'returns'] },
     { label: 'Configuration', keys: ['categories', 'policies', 'commission'] },

@@ -6,76 +6,72 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AdminService {
-  private api = 'http://localhost:5105';
+  private baseurl = 'http://localhost:5105';
  
   constructor(private http: HttpClient) { }
  
-  getPlatformStats(): Observable<any> {
-    return this.http.get(`${this.api}/api/analytics/platform`);
-  }
- 
   getAllSellers(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.api}/api/seller`);
+    return this.http.get<any[]>(`${this.baseurl}/api/seller`);
   }
  
   approveSeller(sellerId: number): Observable<any> {
-    return this.http.put(`${this.api}/api/seller/approve/${sellerId}`, {});
+    return this.http.put(`${this.baseurl}/api/seller/approve/${sellerId}`, {});
   }
  
   rejectSeller(sellerId: number, reason: string): Observable<any> {
-    return this.http.put(`${this.api}/api/seller/reject/${sellerId}`, { reason });
+    return this.http.put(`${this.baseurl}/api/seller/reject/${sellerId}`, { reason });
   }
  
   getAllOrders(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.api}/api/order/all`);
+    return this.http.get<any[]>(`${this.baseurl}/api/order/all`);
   }
  
   getAllDisputes(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.api}/api/dispute`);
+    return this.http.get<any[]>(`${this.baseurl}/api/dispute`);
   }
  
   resolveDispute(disputeId: number, resolutionNote: string): Observable<any> {
-    return this.http.put(`${this.api}/api/dispute/resolve/${disputeId}`, { resolutionNote });
+    return this.http.put(`${this.baseurl}/api/dispute/resolve/${disputeId}`, { resolutionNote });
   }
  
   getAllReturns(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.api}/api/return/all`);
+    return this.http.get<any[]>(`${this.baseurl}/api/return/all`);
   }
  
   processReturn(returnId: number, approve: boolean): Observable<any> {
-    return this.http.put(`${this.api}/api/return/${returnId}`, { approve });
+    return this.http.put(`${this.baseurl}/api/return/${returnId}`, { approve });
   }
  
-  getAllCategories(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.api}/api/category`);
+  getAllCategories(): Observable<any> {
+    return this.http.get<any>(`${this.baseurl}/api/category`);
   }
  
-  createCategory(name: string, parentCategoryID: number | null): Observable<any> {
-    return this.http.post(`${this.api}/api/category`, { name, parentCategoryID });
+  createCategory(Name: string, ParentCategoryID: number | null): Observable<any> {
+    return this.http.post(`${this.baseurl}/api/category`, { Name, ParentCategoryID });
   }
  
   getAllPolicies(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.api}/api/policy`);
+    return this.http.get<any[]>(`${this.baseurl}/api/policy`);
   }
  
   createPolicy(title: string, content: string): Observable<any> {
-    return this.http.post(`${this.api}/api/policy`, { title, content });
+    return this.http.post(`${this.baseurl}/api/policy`, { title, content });
   }
  
   updatePolicy(id: number, title: string, content: string): Observable<any> {
-    return this.http.put(`${this.api}/api/policy/${id}`, { title, content });
+    return this.http.put(`${this.baseurl}/api/policy/${id}`, { title, content });
   }
  
   deletePolicy(id: number): Observable<any> {
-    return this.http.delete(`${this.api}/api/policy/${id}`);
+    return this.http.delete(`${this.baseurl}/api/policy/${id}`);
   }
  
   getCommission(): Observable<any> {
-    return this.http.get(`${this.api}/api/commission`);
+    return this.http.get(`${this.baseurl}/api/commission`);
   }
  
   setCommission(percentage: number): Observable<any> {
-    return this.http.post(`${this.api}/api/commission`, { percentage });
+    return this.http.post(`${this.baseurl}/api/commission`, { percentage });
   }
 }
  

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AdminService } from '../../services/admin.service';
 import { FormsModule } from '@angular/forms';
 
@@ -17,15 +17,19 @@ export class CategoriesComponent implements OnInit {
   newName = '';
   newParentId: number | null = null;
  
-  constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService, private cdr: ChangeDetectorRef) {}
  
   ngOnInit() { this.loadCategories(); }
  
   loadCategories() {
     this.loading = true;
-    this.adminService.getAllCategories().subscribe({
-      next: (data) => { this.categories = data; this.loading = false; },
-      error: () => { this.error = 'Failed to load categories.'; this.loading = false; }
+    this.adminService.getAllCategories()
+    .subscribe({
+      next: (data) => { 
+        console.log('Categories loaded:', data);
+        this.categories = Array.isArray(data)?data:[data];
+         this.loading = false; this.cdr.detectChanges(); },
+      error: () => { this.error = 'Failed to load categories.'; this.loading = false; this.cdr.detectChanges(); }
     });
   }
  
@@ -34,7 +38,9 @@ export class CategoriesComponent implements OnInit {
   submit() {
     if (!this.newName.trim()) return;
     this.adminService.createCategory(this.newName, this.newParentId).subscribe({
-      next: () => { this.actionMsg = 'Category created!'; this.showForm = false; this.loadCategories(); },
+      next: (res) => { this.actionMsg = 'Category created!'; 
+        console.log(res);
+        this.showForm = false; this.loadCategories(); },
       error: () => { this.actionMsg = 'Failed to create category.'; }
     });
   }

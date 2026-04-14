@@ -11,13 +11,11 @@ import { DisputesComponent } from './disputes/disputes.component';
 import { ReturnsComponent } from './returns/returns.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { PoliciesComponent } from './policies/policies.component';
-import { AnalyticsComponent } from './analytics/analytics.component';
 import { CommissionComponent } from './commission/commission.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
  
 @NgModule({
   declarations: [
-    AnalyticsComponent,
     SellersComponent,
     OrdersComponent,
     DisputesComponent,

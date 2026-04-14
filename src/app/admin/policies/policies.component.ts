@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
 import { AdminService } from '../../services/admin.service';
 
 @Component({
@@ -17,15 +17,15 @@ export class PoliciesComponent implements OnInit {
   formContent = '';
   editingId: number | null = null;
  
-  constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService, private cdr: ChangeDetectorRef) {}
  
   ngOnInit() { this.loadPolicies(); }
  
   loadPolicies() {
     this.loading = true;
     this.adminService.getAllPolicies().subscribe({
-      next: (data) => { this.policies = Array.isArray(data) ? data : [data]; this.loading = false; },
-      error: () => { this.error = 'Failed to load policies.'; this.loading = false; }
+      next: (data) => { this.policies = Array.isArray(data) ? data : [data]; this.loading = false; this.cdr.detectChanges(); },
+      error: () => { this.error = 'Failed to load policies.'; this.loading = false; this.cdr.detectChanges(); }
     });
   }
  

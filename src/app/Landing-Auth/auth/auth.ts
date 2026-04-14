@@ -56,7 +56,9 @@ export class Auth {
         } catch (e) {
           console.error("Token decode error:", e);
           // Fallback if decoding fails but login succeeded
+          alert("login error: Invalid email or password.");
           this.router.navigate(['/landingpage']);
+
         }
       },
       error: (err) => {

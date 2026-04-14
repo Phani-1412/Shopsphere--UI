@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
 import { LogisticsService } from '../../services/logistics.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -21,15 +21,15 @@ export class ShipmentsComponent implements OnInit {
   updatingId: number | null = null;
   newStatus = '';
  
-  constructor(private logisticsService: LogisticsService) {}
+  constructor(private logisticsService: LogisticsService, private cdr: ChangeDetectorRef) {}
  
   ngOnInit() { this.loadShipments(); }
  
   loadShipments() {
     this.loading = true;
     this.logisticsService.getAllShipments().subscribe({
-      next: (data) => { this.shipments = data; this.loading = false; },
-      error: () => { this.error = 'Failed to load shipments.'; this.loading = false; }
+      next: (data) => { this.shipments = data; this.loading = false; this.cdr.detectChanges(); },
+      error: () => { this.error = 'Failed to load shipments.'; this.loading = false; this.cdr.detectChanges(); }
     });
   }
  

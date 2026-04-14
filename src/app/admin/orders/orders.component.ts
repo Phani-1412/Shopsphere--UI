@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,ChangeDetectorRef } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { AdminService } from '../../services/admin.service';
 
@@ -13,12 +13,12 @@ export class OrdersComponent implements OnInit {
   loading = true;
   error = '';
  
-  constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService, private cdr: ChangeDetectorRef) {}
  
   ngOnInit() {
     this.adminService.getAllOrders().subscribe({
-      next: (data) => { this.orders = Array.isArray(data) ? data : [data]; this.loading = false; },
-      error: () => { this.error = 'Failed to load orders.'; this.loading = false; }
+      next: (data) => { this.orders = Array.isArray(data) ? data : [data]; this.loading = false; this.cdr.markForCheck(); },
+      error: () => { this.error = 'Failed to load orders.'; this.loading = false; this.cdr.markForCheck(); }
     });
   }
 }

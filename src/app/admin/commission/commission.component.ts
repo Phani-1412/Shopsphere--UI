@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import { AdminService } from '../../services/admin.service';
 
 @Component({
@@ -14,15 +14,15 @@ export class CommissionComponent implements OnInit {
   showForm = false;
   newPercentage: number | null = null;
  
-  constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService, private cdr: ChangeDetectorRef) {}
  
   ngOnInit() { this.loadCommission(); }
  
   loadCommission() {
     this.loading = true;
     this.adminService.getCommission().subscribe({
-      next: (data) => { this.current = data; this.loading = false; },
-      error: () => { this.current = null; this.loading = false; }
+      next: (data) => { this.current = data; this.loading = false; this.cdr.detectChanges(); },
+      error: () => { this.current = null; this.loading = false; this.cdr.detectChanges(); }
     });
   }
  

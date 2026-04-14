@@ -54,7 +54,6 @@
       <button class="close-btn" (click)="closePanel()">✕</button>
     </div>
     <div class="panel-body">
-      <app-analytics   *ngIf="activePanel === 'analytics'"></app-analytics>
       <app-sellers     *ngIf="activePanel === 'sellers'"></app-sellers>
       <app-orders      *ngIf="activePanel === 'orders'"></app-orders>
       <app-disputes    *ngIf="activePanel === 'disputes'"></app-disputes>
