@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 import { LogisticsGuard } from './guards/logistics.gaurd';
-import { Auth } from './Landing-Auth/auth/auth';
-import { CustomerGuard } from './customer/customer.guard';
+import { CustomerGuard } from './guards/customer.guard';
 import { SellerGuard } from '../app/guards/seller.guard';
  
 const routes: Routes = [
