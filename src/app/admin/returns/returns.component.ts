@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { OnInit } from '@angular/core';
+import { OnInit, ChangeDetectorRef } from '@angular/core';
 import { AdminService } from '../../services/admin.service';
 
 @Component({
@@ -14,15 +14,15 @@ export class ReturnsComponent implements OnInit {
   error = '';
   actionMsg = '';
  
-  constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService, private cdr: ChangeDetectorRef) {}
  
   ngOnInit() { this.loadReturns(); }
  
   loadReturns() {
     this.loading = true;
     this.adminService.getAllReturns().subscribe({
-      next: (data) => { this.returns = data; this.loading = false; },
-      error: () => { this.error = 'Failed to load returns.'; this.loading = false; }
+      next: (data) => { this.returns = Array.isArray(data)?data:[data]; this.loading = false; this.cdr.detectChanges(); },
+      error: () => { this.error = 'Failed to load returns.'; this.loading = false; this.cdr.detectChanges(); }
     });
   }
  

@@ -4,7 +4,7 @@
 <div *ngIf="!loading">
   <div class="stat-card" style="margin-bottom:20px;">
     <div class="stat-icon">💰</div>
-    <div class="stat-value" *ngIf="current">{{ current.percentage }}%</div>
+    <div class="stat-value" *ngIf="current">{{ current.percentage ??current.commissionRate ?? current.rate ?? 'Unknown field' }}%</div>
     <div class="stat-value" *ngIf="!current">Not set</div>
     <div class="stat-label">Current Commission Rate</div>
   </div>

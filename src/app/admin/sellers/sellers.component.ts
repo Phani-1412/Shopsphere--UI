@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { AdminService } from '../../services/admin.service';
 
@@ -16,15 +16,15 @@ export class SellersComponent implements OnInit {
   rejectingSellerId: number | null = null;
   rejectReason = '';
  
-  constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService, private cdr: ChangeDetectorRef) {}
  
   ngOnInit() { this.loadSellers(); }
  
   loadSellers() {
     this.loading = true;
     this.adminService.getAllSellers().subscribe({
-      next: (data) => { this.sellers = data; this.loading = false; },
-      error: () => { this.error = 'Failed to load sellers.'; this.loading = false; }
+      next: (data) => { this.sellers = Array.isArray(data)?data:[data]; this.loading = false; this.cdr.detectChanges(); },
+      error: () => { this.error = 'Failed to load sellers.'; this.loading = false; this.cdr.detectChanges(); }
     });
   }
  

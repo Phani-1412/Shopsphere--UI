@@ -24,7 +24,7 @@ export class PoliciesComponent implements OnInit {
   loadPolicies() {
     this.loading = true;
     this.adminService.getAllPolicies().subscribe({
-      next: (data) => { this.policies = data; this.loading = false; },
+      next: (data) => { this.policies = Array.isArray(data) ? data : [data]; this.loading = false; },
       error: () => { this.error = 'Failed to load policies.'; this.loading = false; }
     });
   }

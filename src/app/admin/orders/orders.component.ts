@@ -17,7 +17,7 @@ export class OrdersComponent implements OnInit {
  
   ngOnInit() {
     this.adminService.getAllOrders().subscribe({
-      next: (data) => { this.orders = data; this.loading = false; },
+      next: (data) => { this.orders = Array.isArray(data) ? data : [data]; this.loading = false; },
       error: () => { this.error = 'Failed to load orders.'; this.loading = false; }
     });
   }

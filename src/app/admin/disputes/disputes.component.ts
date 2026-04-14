@@ -22,8 +22,8 @@ export class DisputesComponent implements OnInit {
   loadDisputes() {
     this.loading = true;
     this.adminService.getAllDisputes().subscribe({
-      next: (data) => { this.disputes = data; this.loading = false; },
-      error: () => { this.error = 'Failed to load disputes.'; this.loading = false; }
+      next: (data) => { this.disputes = Array.isArray(data) ? data : [data]; this.loading = false;  },
+      error: () => { this.error = 'Failed to load disputes.'; this.loading = false;  }
     });
   }
  

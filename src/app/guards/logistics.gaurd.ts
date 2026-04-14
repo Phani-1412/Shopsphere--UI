@@ -18,7 +18,7 @@ export class LogisticsGuard implements CanActivate {
       return true;
     }
  
-    this.router.navigate(['/login']);
+    this.router.navigate(['/landingpage/login']);
     return false;
   }
 }
