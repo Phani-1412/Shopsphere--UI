@@ -18,23 +18,25 @@
       </div>
 
       <div class="col-md-4">
-        <label class="form-label small text-muted">Category ID</label>
-        <input type="number" class="form-control" [(ngModel)]="product.CategoryId" placeholder="Enter Category ID" />
+        <label class="form-label small text-muted">Select Store</label>
+        <select class="form-select" [(ngModel)]="product.StoreId">
+          <option [ngValue]="undefined" disabled selected>Choose your store...</option>
+          <option *ngFor="let s of stores" [value]="s.storeId || s.storeID">
+            {{ s.name || s.categoryFocus }} (ID: {{ s.storeId || s.storeID }})
+          </option>
+        </select>
       </div>
 
       <div class="col-md-4">
-        <label class="form-label small text-muted">Initial Status</label>
-        <select class="form-select" [(ngModel)]="product.Status">
-          <option value="Active">Active</option>
-          <option value="Inactive">Inactive</option>
-        </select>
+        <label class="form-label small text-muted">Category ID</label>
+        <input type="number" class="form-control" [(ngModel)]="product.CategoryId" placeholder="Enter Category ID" />
       </div>
 
       <div class="col-12 mt-3">
         <button 
           class="btn btn-dark w-100 py-2" 
           (click)="addProduct()" 
-          [disabled]="!product.Name || !product.SKU || product.price <= 0 || !product.CategoryId">
+          [disabled]="!product.Name || !product.SKU || product.price <= 0 || !product.StoreId">
           + Add Product
         </button>
       </div>
@@ -43,7 +45,7 @@
 
   <div class="card shadow-sm">
     <div class="card-header bg-dark text-white d-flex justify-content-between">
-      <span>Product List</span>
+      <span>My Products</span>
       <span class="badge bg-secondary">Total: {{products.length}}</span>
     </div>
     <div class="table-responsive">
@@ -58,15 +60,18 @@
         </thead>
         <tbody>
           <tr *ngFor="let p of products">
-            <td>{{ p.Name || p.name }}</td>
-            <td>₹{{ p.price || p.Price }}</td>
-            <td><code>{{ p.SKU || p.sku }}</code></td>
+            <td>{{ p.name || p.Name }}</td>
+            <td>₹{{ (p.price || p.Price) | number:'1.2-2' }}</td>
+            <td><code>{{ p.sku || p.SKU }}</code></td>
             <td>
               <span class="badge rounded-pill" 
-                [ngClass]="(p.Status || p.status) === 'Active' ? 'bg-success-subtle text-success border border-success' : 'bg-danger-subtle text-danger border border-danger'">
-                {{ (p.Status || p.status) || 'Active' }}
+                [ngClass]="(p.status || p.Status) === 'Active' ? 'bg-success-subtle text-success border border-success' : 'bg-danger-subtle text-danger border border-danger'">
+                {{ (p.status || p.Status) || 'Active' }}
               </span>
             </td>
+          </tr>
+          <tr *ngIf="products.length === 0">
+            <td colspan="4" class="text-center text-muted py-4">No products found. Add your first product above!</td>
           </tr>
         </tbody>
       </table>

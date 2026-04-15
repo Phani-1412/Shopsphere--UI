@@ -7,17 +7,18 @@ import { ProductService } from '../../services/product-service';
   standalone: false
 })
 export class ProductManagerComponent implements OnInit {
-  // Use 'any' to allow CategoryId and Status without strict interface issues
+  // StoreId starts as undefined to show the placeholder
   product: any = { 
     Name: '', 
     price: 0, 
     SKU: '', 
-    StoreId: 1, 
+    StoreId: undefined, 
     CategoryId: null,
     Status: 'Active'
   };
 
   products: any[] = [];
+  stores: any[] = []; 
 
   constructor(
     private productService: ProductService, 
@@ -25,33 +26,46 @@ export class ProductManagerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadProducts();
+    this.loadSellerProducts();
+    this.loadSellerStores(); 
   }
 
-  loadProducts() {
-    this.productService.getProducts().subscribe({
-      next: (res) => {
-        this.products = res;
-        console.log(res);
+  loadSellerStores() {
+    this.productService.getMyStores().subscribe({
+      next: (data) => {
+        this.stores = data;
         this.cdr.detectChanges();
       },
-      error: (err) => console.error("Load failed", err)
+      error: (err) => console.error("Error loading stores", err)
+    });
+  }
+
+  loadSellerProducts() {
+    this.productService.getMyProducts().subscribe({
+      next: (data) => {
+        this.products = data;
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error("Error loading your products", err)
     });
   }
 
   addProduct() {
-    // Final safety check
-    if (!this.product.Name || !this.product.SKU || !this.product.CategoryId) return;
+    // Basic validation before sending to backend
+    if (!this.product.Name || !this.product.SKU || !this.product.CategoryId || !this.product.StoreId) {
+      alert('⚠️ Please fill all required fields including Store and Category.');
+      return;
+    }
 
     this.productService.createProduct(this.product).subscribe({
       next: () => {
         alert('✅ Product added successfully!');
         this.resetForm();
-        this.loadProducts();
+        this.loadSellerProducts();
       },
       error: (err) => {
         console.error(err);
-        alert('❌ Failed to add product. Check if the SKU is unique.');
+        alert('❌ Failed to add product. Ensure SKU is unique.');
       }
     });
   }
@@ -61,7 +75,8 @@ export class ProductManagerComponent implements OnInit {
       Name: '', 
       price: 0, 
       SKU: '', 
-      StoreId: 1, 
+      StoreId: undefined, 
+      CategoryId: null,
       Status: 'Active'
     };
     this.cdr.detectChanges();
