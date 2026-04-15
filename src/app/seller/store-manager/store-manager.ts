@@ -9,9 +9,14 @@ import { SellerService } from '../../services/seller.service';
   standalone: false
 })
 export class StoreManager implements OnInit {
-  // REMOVED rating from the entry object
+  // Logic for the New Registration
+  newStoreName: string = '';
+  
+  // Logic for existing stores
   store = { categoryFocus: '', status: 'Active' };
   stores: any[] = [];
+  
+  // profileStatus can be: 'unregistered', 'Pending', 'Approved', 'Rejected'
   profileStatus: string = ''; 
 
   constructor(
@@ -27,12 +32,34 @@ export class StoreManager implements OnInit {
   checkProfileAndLoad() {
     this.sellerService.myProfile().subscribe({
       next: (p) => {
-        this.profileStatus = p.complianceStatus;
-        this.loadStores();
+        if (p && p.sellerId) {
+          this.profileStatus = p.complianceStatus;
+          this.loadStores();
+        } else {
+          this.profileStatus = 'unregistered';
+        }
       },
-      error: () => this.profileStatus = 'unregistered'
+      error: () => {
+        this.profileStatus = 'unregistered';
+      }
     });
   }
+
+  registerMerchant() {
+  if (!this.newStoreName.trim()) return;
+
+  this.sellerService.registerSellerProfile(this.newStoreName).subscribe({
+    next: (res: any) => {
+      alert(res.message || res || 'Registration successful!');
+      this.checkProfileAndLoad(); 
+    },
+    error: (err) => {
+      const errorMsg = err.error?.message || err.error || 'Server error';
+      alert('Registration failed: ' + errorMsg);
+      this.checkProfileAndLoad();
+    }
+  });
+}
 
   loadStores() {
     this.storeService.getStores().subscribe({
@@ -46,34 +73,29 @@ export class StoreManager implements OnInit {
 
   createStore() {
     if (!this.store.categoryFocus.trim()) return;
-    
     this.storeService.createStore(this.store).subscribe({
       next: () => {
         alert('Store Attributes Added!');
         this.store.categoryFocus = '';
         this.loadStores();
       },
-      error: (err) => alert('Failed to add store: ' + (err.error?.message || err.message))
+      error: (err) => alert('Failed: ' + err.error)
     });
   }
 
   toggleStatus(item: any) {
     const id = item.storeId || item.storeID; 
-    const currentStatus = item.status || item.Status;
-    const newStatus = currentStatus === 'Active' ? 'Inactive' : 'Active';
-
+    const newStatus = (item.status || item.Status) === 'Active' ? 'Inactive' : 'Active';
     this.storeService.updateStatus(id, newStatus).subscribe({
-      next: () => this.loadStores(),
-      error: (err) => alert('Update failed')
+      next: () => this.loadStores()
     });
   }
 
   deleteStore(item: any) {
     const id = item.storeId || item.storeID;
-    if (confirm('Delete this store attribute?')) {
+    if (confirm('Delete this store?')) {
       this.storeService.deleteStore(id).subscribe({
-        next: () => this.loadStores(),
-        error: (err) => alert('Delete failed')
+        next: () => this.loadStores()
       });
     }
   }
