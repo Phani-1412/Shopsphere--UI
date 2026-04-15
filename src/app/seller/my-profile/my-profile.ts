@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../../services/api.service'
+import { SellerService } from '../../services/seller.service'; 
+import { ChangeDetectorRef } from '@angular/core';
+
 @Component({
  selector: 'app-my-profile',
  standalone: false,
@@ -7,21 +9,23 @@ import { ApiService } from '../../services/api.service'
  styleUrls: ['./my-profile.css']
 })
 export class MyProfile implements OnInit {
- user: any = {
-   userId:'',
-   sellerId:'',
-   name: '',
-   email: '',
-   phone: ''
- };
-profile: any;
- constructor(private api: ApiService) {}
- ngOnInit(): void {
-   this.getProfile();
- }
- getProfile() {
-   this.api.get('seller/my-profile').subscribe((res: any) => {
-     this.user = res;
-   });
- }
+  user: any = {};
+  constructor(private sellerService: SellerService,private cdr: ChangeDetectorRef) {}
+
+  ngOnInit(): void {
+    this.getProfile();
+  }
+
+  getProfile() {
+    this.sellerService.myProfile().subscribe({
+      next: (res: any) => {
+        this.user = res;
+        this.cdr.detectChanges();
+        console.log("API Response:", res);
+      },
+      error: (err) => {
+        console.error('Error fetching profile:', err);
+      }
+    });
+  }
 }

@@ -1,68 +1,82 @@
-<h2>Orders</h2>
- 
-<!-- Success / Error messages -->
-<div *ngIf="actionMsg" style="color: green; margin-bottom: 12px;">{{ actionMsg }}</div>
-<div *ngIf="error"     style="color: red;   margin-bottom: 12px;">{{ error }}</div>
-<div *ngIf="loading">Loading...</div>
- 
-<table *ngIf="!loading">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Customer</th>
-      <th>Total</th>
-      <th>Status</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let order of orders">
-      <td>{{ order.orderID }}</td>
-      <td>Product #{{ order.productID }} × {{ order.quantity }}</td>
-      <td>₹{{ order.unitPrice * order.quantity | number:'1.2-2' }}</td>
-      <td>
-        <span class="status-badge status-{{ order.orderStatus?.toLowerCase() }}">
-          {{ order.orderStatus }}
-        </span>
-      </td>
-      <td>
-        <!-- Show update button only if there are valid next statuses -->
-        <button
-          *ngIf="getNextStatuses(order.orderStatus).length > 0"
-          (click)="openUpdate(order.orderID, order.orderStatus)">
-          Update
-        </button>
-        <span *ngIf="getNextStatuses(order.orderStatus).length === 0"
-          style="color: #9ca3af; font-size: 12px;">
-          No action
-        </span>
-      </td>
-    </tr>
- 
-    <tr *ngIf="orders.length === 0">
-      <td colspan="5" style="text-align:center; color: #9ca3af;">No orders found.</td>
-    </tr>
-  </tbody>
-</table>
- 
-<!-- Inline update form — appears below the row when Update is clicked -->
-<div *ngIf="updatingOrderId !== null"
-  style="margin-top:16px; padding:16px; border:1px solid #e5e7eb; border-radius:8px; background:#f9fafb;">
-  <p style="font-weight:600; margin-bottom:8px;">
-    Update Order #{{ updatingOrderId }} Status
-  </p>
-  <select [(ngModel)]="newStatus" style="padding:6px 10px; border-radius:6px; border:1px solid #d1d5db; margin-right:8px;">
-    <option *ngFor="let s of getNextStatuses(getCurrentStatus())" [value]="s">
-      {{ s | titlecase }}
-    </option>
-  </select>
-  <button (click)="submitUpdate()"
-    style="padding:6px 14px; background:#4f46e5; color:#fff; border:none; border-radius:6px; cursor:pointer; margin-right:6px;">
-    Save
-  </button>
-  <button (click)="cancelUpdate()"
-    style="padding:6px 14px; background:#f3f4f6; border:1px solid #d1d5db; border-radius:6px; cursor:pointer;">
-    Cancel
-  </button>
+<div class="container mt-4">
+  <div *ngIf="actionMsg" class="alert alert-success py-2 shadow-sm">{{ actionMsg }}</div>
+  <div *ngIf="error" class="alert alert-danger py-2 shadow-sm">{{ error }}</div>
+
+  <div class="card shadow-sm">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">Order Management</h5>
+      <span *ngIf="loading" class="badge bg-light text-dark">Refreshing...</span>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Order ID</th>
+            <th>Items & Quantity</th>
+            <th>Total Amount</th>
+            <th>Current Status</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders">
+            <td class="fw-bold text-primary">#{{ order.orderID }}</td>
+            <td>
+              <div class="small">Product #{{ order.productID }}</div>
+              <div class="text-muted small">Qty: {{ order.quantity }}</div>
+            </td>
+            <td>₹{{ order.unitPrice * order.quantity | number:'1.2-2' }}</td>
+            <td>
+              <span class="badge rounded-pill shadow-sm p-2 px-3 status-{{ order.orderStatus?.toLowerCase() }}">
+                {{ order.orderStatus | uppercase }}
+              </span>
+            </td>
+            <td class="text-center">
+              <button 
+                *ngIf="getNextStatuses(order.orderStatus).length > 0"
+                class="btn btn-sm btn-dark px-3"
+                (click)="openUpdate(order.orderID, order.orderStatus)">
+                Update
+              </button>
+              <span *ngIf="getNextStatuses(order.orderStatus).length === 0" class="text-muted small italic">
+                Completed
+              </span>
+            </td>
+          </tr>
+
+          <tr *ngIf="orders.length === 0 && !loading">
+            <td colspan="5" class="text-center py-5 text-muted">
+              <i class="bi bi-box-seam d-block mb-2 fs-2"></i>
+              No orders found in your queue.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div *ngIf="updatingOrderId !== null" class="card shadow mt-4 border-primary animate__animated animate__fadeInUp">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h6 class="mb-0 fw-bold">Update Order #{{ updatingOrderId }}</h6>
+        <button type="button" class="btn-close" (click)="cancelUpdate()"></button>
+      </div>
+      
+      <div class="row g-3 align-items-end">
+        <div class="col-md-6">
+          <label class="form-label small text-muted">Next Available Status</label>
+          <select [(ngModel)]="newStatus" class="form-select">
+            <option *ngFor="let s of getNextStatuses(getCurrentStatus())" [value]="s">
+              {{ s | titlecase }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-6 d-flex gap-2">
+          <button class="btn btn-primary flex-grow-1" (click)="submitUpdate()">Save Changes</button>
+          <button class="btn btn-outline-secondary" (click)="cancelUpdate()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
- 

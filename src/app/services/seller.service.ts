@@ -26,4 +26,11 @@ export class SellerService {
     return this.http.get(`${this.baseUrl}/seller/my-profile`);
   }
 
+  registerSellerProfile(storeName: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/seller`, { storeName });
+  }
+
+  getCommission(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/commission`);
+  }
 }

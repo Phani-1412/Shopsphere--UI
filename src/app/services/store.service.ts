@@ -1,24 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Store } from '../models/store.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class StoreService {
-
-  private baseUrl = 'http://localhost:5105/api';
+  private baseUrl = 'http://localhost:5105/api/SellerStore';
 
   constructor(private http: HttpClient) {}
 
-  // ✅ CREATE STORE
-  createStore(store: Store): Observable<any> {
-    return this.http.post(`${this.baseUrl}/sellerstore/create`, store);
+  // Fetches from [HttpGet("my-stores")]
+  getStores(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/my-stores`);
   }
 
-  // ✅ GET STORES (adjust endpoint if backend differs)
-  getStores(): Observable<Store[]> {
-    return this.http.get<Store[]>(`${this.baseUrl}/sellerstore/my-stores`);
+  // Sends to [HttpPost("create")]
+  createStore(storeData: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/create`, storeData);
+  }
+
+  // Sends to [HttpPut("update-status/{storeId}")]
+  updateStatus(storeId: number, status: string): Observable<any> {
+    return this.http.put(`${this.baseUrl}/update-status/${storeId}`, { status });
+  }
+
+  // Sends to [HttpDelete("delete/{storeId}")]
+  deleteStore(storeId: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/delete/${storeId}`);
   }
 }

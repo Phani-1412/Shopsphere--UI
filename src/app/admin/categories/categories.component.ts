@@ -40,7 +40,7 @@ export class CategoriesComponent implements OnInit {
     this.adminService.createCategory(this.newName, this.newParentId).subscribe({
       next: (res) => { this.actionMsg = 'Category created!'; 
         console.log(res);
-        this.showForm = false; this.loadCategories(); },
+        this.showForm = false; this.loadCategories();this.cdr.detectChanges(); },
       error: () => { this.actionMsg = 'Failed to create category.'; }
     });
   }

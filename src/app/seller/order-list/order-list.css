@@ -1,0 +1,18 @@
+/* Custom Badge Colors to match the ShopSphere look */
+.status-placed { background-color: #fef3c7; color: #92400e; }    /* Yellow */
+.status-paid { background-color: #dcfce7; color: #166534; }      /* Green */
+.status-packed { background-color: #dbeafe; color: #1e40af; }    /* Blue */
+.status-shipped { background-color: #f3e8ff; color: #6b21a8; }   /* Purple */
+.status-delivered { background-color: #f0fdf4; color: #15803d; border: 1px solid #bdf0cc; } /* Success Green */
+.status-cancelled { background-color: #fee2e2; color: #991b1b; } /* Red */
+
+.table th {
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.card {
+  border: none;
+  border-radius: 12px;
+}

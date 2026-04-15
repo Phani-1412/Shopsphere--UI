@@ -1,61 +1,69 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ProductService } from '../../services/product-service';
-import { Product } from '../../models/product.model';
 
 @Component({
   selector: 'app-product-manager',
   templateUrl: './product-manager.html',
-  styleUrls: ['./product-manager.css'],
-  standalone: false,
+  standalone: false
 })
 export class ProductManagerComponent implements OnInit {
-
-  product: Product = {
-    Name: '',
-    Price: 0,
-    SKU: '',
-    StoreId: 0,
-    CategoryId: 0
+  // Use 'any' to allow CategoryId and Status without strict interface issues
+  product: any = { 
+    Name: '', 
+    price: 0, 
+    SKU: '', 
+    StoreId: 1, 
+    CategoryId: null,
+    Status: 'Active'
   };
 
-  products: Product[] = [];
+  products: any[] = [];
 
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService, 
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.loadProducts();
   }
 
-  // ✅ CREATE PRODUCT
-  addProduct(): void {
+  loadProducts() {
+    this.productService.getProducts().subscribe({
+      next: (res) => {
+        this.products = res;
+        console.log(res);
+        this.cdr.detectChanges();
+      },
+      error: (err) => console.error("Load failed", err)
+    });
+  }
+
+  addProduct() {
+    // Final safety check
+    if (!this.product.Name || !this.product.SKU || !this.product.CategoryId) return;
+
     this.productService.createProduct(this.product).subscribe({
       next: () => {
-        alert('✅ Product created successfully');
+        alert('✅ Product added successfully!');
         this.resetForm();
         this.loadProducts();
       },
       error: (err) => {
         console.error(err);
-        alert('❌ Failed to create product');
+        alert('❌ Failed to add product. Check if the SKU is unique.');
       }
     });
   }
 
-  // ✅ GET PRODUCTS
-  loadProducts(): void {
-    this.productService.getProducts().subscribe({
-      next: (res) => this.products = res,
-      error: (err) => console.error(err)
-    });
-  }
-
-  private resetForm(): void {
-    this.product = {
-      Name: '',
-      Price: 0,
-      SKU: '',
-      StoreId: 1,
-      CategoryId: 3
+  resetForm() {
+    this.product = { 
+      Name: '', 
+      price: 0, 
+      SKU: '', 
+      StoreId: 1, 
+      Status: 'Active'
     };
+    this.cdr.detectChanges();
   }
 }

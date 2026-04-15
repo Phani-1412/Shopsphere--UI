@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { SellerService } from '../../services/seller.service';
  
 @Component({
@@ -24,14 +24,14 @@ export class Order implements OnInit {
     'shipped': ['delivered']
   };
  
-  constructor(private sellerService: SellerService) {}
+  constructor(private sellerService: SellerService, private cdr:ChangeDetectorRef ) {}
  
   ngOnInit() { this.loadOrders(); }
  
   loadOrders() {
     this.loading = true;
     this.sellerService.getSellerOrders().subscribe({
-      next: (data) => { this.orders = data; this.loading = false; },
+      next: (data) => { this.orders = data; this.loading = false; this.cdr.detectChanges() },
       error: () => { this.error = 'Failed to load orders.'; this.loading = false; }
     });
   }
@@ -54,17 +54,26 @@ export class Order implements OnInit {
   }
  
   submitUpdate() {
-    if (!this.newStatus || this.updatingOrderId === null) return;
-    this.sellerService.updateOrderStatus(this.updatingOrderId, this.newStatus).subscribe({
-      next: () => {
-        this.actionMsg = `Order #${this.updatingOrderId} updated to "${this.newStatus}"`;
-        this.updatingOrderId = null;
-        this.loadOrders();
-      },
-      error: () => { this.actionMsg = 'Failed to update order status.'; }
-    });
-  }
- 
+  if (!this.newStatus || this.updatingOrderId === null) return;
+  
+  this.loading = true; // Show loading while updating
+  this.sellerService.updateOrderStatus(this.updatingOrderId, this.newStatus).subscribe({
+    next: () => {
+      this.actionMsg = `✅ Order #${this.updatingOrderId} status updated to ${this.newStatus.toUpperCase()}`;
+      this.updatingOrderId = null;
+      this.loadOrders();
+      // Auto-clear message after 3 seconds
+      setTimeout(() => this.actionMsg = '', 3000);
+      this.cdr.detectChanges();
+    },
+    error: (err) => { 
+      this.error = '❌ Failed to update order. Please try again.';
+      this.loading = false;
+      setTimeout(() => this.error = '', 4000);
+      this.cdr.detectChanges();
+    }
+  });
+}
   cancelUpdate() { this.updatingOrderId = null; this.newStatus = ''; }
 }
  

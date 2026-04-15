@@ -1,28 +1,53 @@
 <div class="container mt-4">
-<h3>Inventory Manager</h3>
-<div class="card p-3">
-    
-<input type="number" min="0" [(ngModel)]="inventory.productId"
-          class="form-control mb-2"
-          placeholder="Product ID">
-<input type="number" min="0" [(ngModel)]="inventory.availableQuantity"
-          class="form-control mb-2"
-          placeholder="Available Quantity">
-<input type="number" min="0" [(ngModel)]="inventory.reorderThreshold"
-          class="form-control mb-2"
-          placeholder="Reorder Threshold">
-<button class="btn btn-primary w-100 mb-2"
-           (click)="CreateOrUpdate()">
-     Create Inventory
-</button>
-<button class="btn btn-success w-100"
-           (click)="getInventory()">
-     Get Inventory
-</button>
-</div>
-<div *ngIf="result" class="card p-3 mt-3">
-<p><b>Product ID:</b> {{result.productID}}</p>
-<p><b>Available Qty:</b> {{result.availableQuantity}}</p>
-<p><b>Reorder Threshold:</b> {{result.reorderThreshold}}</p>
-</div>
+  <div *ngIf="actionMsg" class="alert alert-success py-2 shadow-sm">{{ actionMsg }}</div>
+  <div *ngIf="errorMsg" class="alert alert-danger py-2 shadow-sm">{{ errorMsg }}</div>
+
+  <div class="card shadow-sm">
+    <div class="card-header bg-dark text-white">
+      <h5 class="mb-0">Inventory Manager</h5>
+    </div>
+    <div class="card-body p-4">
+      <div class="row g-3">
+        <div class="col-md-12">
+          <label class="form-label small text-muted">Product ID</label>
+          <input type="number" min="0" [(ngModel)]="inventory.ProductID" class="form-control">
+        </div>
+        
+        <div class="col-md-6">
+          <label class="form-label small text-muted">Available Quantity</label>
+          <input type="number" min="0" [(ngModel)]="inventory.AvailableQuantity" class="form-control">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label small text-muted">Reorder Threshold</label>
+          <input type="number" min="0" [(ngModel)]="inventory.ReorderThreshold" class="form-control">
+        </div>
+
+        <div class="col-12 d-flex gap-2 mt-3">
+          <button class="btn btn-primary flex-grow-1" (click)="CreateOrUpdate()">Save Inventory</button>
+          <button class="btn btn-outline-success" (click)="getInventory()">Get Inventory</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="result" class="card shadow-sm mt-4 border-success animate__animated animate__fadeIn">
+    <div class="card-header bg-success text-white small fw-bold">Current Stock Level</div>
+    <div class="card-body">
+      <div class="row text-center">
+        <div class="col-4 border-end">
+          <div class="text-muted small">Product ID</div>
+          <div class="fw-bold fs-5">#{{result.productID || result.ProductID}}</div>
+        </div>
+        <div class="col-4 border-end">
+          <div class="text-muted small">Available</div>
+          <div class="fw-bold fs-5 text-primary">{{result.availableQuantity || result.AvailableQuantity}}</div>
+        </div>
+        <div class="col-4">
+          <div class="text-muted small">Threshold</div>
+          <div class="fw-bold fs-5 text-danger">{{result.reorderThreshold || result.ReorderThreshold}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

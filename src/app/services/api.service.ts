@@ -9,9 +9,9 @@ export class ApiService {
  get(url: string) {
    return this.http.get(`${this.baseUrl}/${url}`);
  }
- post(url: string, data: any) {
-   return this.http.post(`${this.baseUrl}/${url}`, data);
- }
+ post(url: string, data: any, options?: any) {
+  return this.http.post(`${this.baseUrl}/${url}`, data, options);
+}
  put(url: string, data: any) {
    return this.http.put(`${this.baseUrl}/${url}`, data);
  }

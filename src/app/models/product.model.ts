@@ -1,7 +1,9 @@
 export interface Product {
+  id?: number;
   Name: string;
   Price: number;
   SKU: string;
-  StoreId: number;
-  CategoryId: number;
+  CategoryId: number; // Ensure this matches the JSON property name
+  Status: string;
+  StoreId:number;
 }
