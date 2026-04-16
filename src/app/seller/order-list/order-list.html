@@ -26,7 +26,7 @@
               <div class="small">Product #{{ order.productID }}</div>
               <div class="text-muted small">Qty: {{ order.quantity }}</div>
             </td>
-            <td>₹{{ order.unitPrice * order.quantity | number:'1.2-2' }}</td>
+            <td>₹{{ (order.totalAmount || (order.unitPrice * order.quantity)) | number:'1.2-2' }}</td>
             <td>
               <span class="badge rounded-pill shadow-sm p-2 px-3 status-{{ order.orderStatus?.toLowerCase() }}">
                 {{ order.orderStatus | uppercase }}
