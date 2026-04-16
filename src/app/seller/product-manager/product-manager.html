@@ -2,46 +2,37 @@
   <div class="card shadow-sm p-4 mb-4">
     <h5 class="mb-3 text-dark fw-bold">Product Manager</h5>
     <div class="row g-3">
-      <div class="col-md-6">
-        <label class="form-label small text-muted">Product Name</label>
-        <input type="text" class="form-control" [(ngModel)]="product.Name" placeholder="e.g. EarPods" />
-      </div>
-
-      <div class="col-md-6">
-        <label class="form-label small text-muted">Price (₹)</label>
-        <input type="number" class="form-control" [(ngModel)]="product.price" placeholder="0.00" />
-      </div>
-
-      <div class="col-md-4">
-        <label class="form-label small text-muted">SKU</label>
-        <input type="text" class="form-control" [(ngModel)]="product.SKU" placeholder="e.g. WH-001" />
-      </div>
-
-      <div class="col-md-4">
-        <label class="form-label small text-muted">Select Store</label>
-        <select class="form-select" [(ngModel)]="product.StoreId">
-          <option [ngValue]="undefined" disabled selected>Choose your store...</option>
-          <option *ngFor="let s of stores" [value]="s.storeId || s.storeID">
-            {{ s.name || s.categoryFocus }} (ID: {{ s.storeId || s.storeID }})
-          </option>
-        </select>
-      </div>
-
-      <div class="col-md-4">
-        <label class="form-label small text-muted">Category ID</label>
-        <input type="number" class="form-control" [(ngModel)]="product.CategoryId" placeholder="Enter Category ID" />
-      </div>
-
-      <div class="col-12 mt-3">
-        <button 
-          class="btn btn-dark w-100 py-2" 
-          (click)="addProduct()" 
-          [disabled]="!product.Name || !product.SKU || product.price <= 0 || !product.StoreId">
-          + Add Product
-        </button>
-      </div>
-    </div>
+      <div class="row g-3">
+  <div class="col-md-6">
+    <label class="form-label small text-muted">Product Name</label>
+    <input type="text" class="form-control" [(ngModel)]="product.Name" placeholder="e.g. EarPods" />
   </div>
+
+  <div class="col-md-6">
+    <label class="form-label small text-muted">Price (₹)</label>
+    <input type="number" class="form-control" [(ngModel)]="product.price" placeholder="0.00" />
+  </div>
+
+  <div class="col-md-6">
+    <label class="form-label small text-muted">SKU</label>
+    <input type="text" class="form-control" [(ngModel)]="product.SKU" placeholder="e.g. WH-001" />
+  </div>
+
+  <div class="col-md-6">
+    <label class="form-label small text-muted">Category ID</label>
+    <input type="number" class="form-control" [(ngModel)]="product.CategoryId" placeholder="Enter Category ID" />
+  </div>
+
+  <div class="col-12 mt-3">
+    <button 
+      class="btn btn-dark w-100 py-2" 
+      (click)="addProduct()" 
+      [disabled]="!product.Name || !product.SKU || product.price <= 0 || !product.CategoryId">
+      + Add Product
+    </button>
+  </div>
+</div>
+
 
   <div class="card shadow-sm">
     <div class="card-header bg-dark text-white d-flex justify-content-between">

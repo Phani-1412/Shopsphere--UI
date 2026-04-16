@@ -21,7 +21,9 @@ export class ProductService {
   }
 
   // Create a new product
-  createProduct(product: any): Observable<any> {
-    return this.http.post(`${this.api}/api/product`, product);
-  }
+createProduct(product: any): Observable<string> {
+  return this.http.post(`${this.api}/api/Product/create`, product, { 
+    responseType: 'text' 
+  });
+}
 }
